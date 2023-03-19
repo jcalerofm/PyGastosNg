@@ -1,0 +1,50 @@
+.register-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #E1F6F4;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+  color: #07588A;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #6AC1B8;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #BFE9DB;
+  border-radius: 5px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #07588A;
+  color: #E1F6F4;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #6AC1B8;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

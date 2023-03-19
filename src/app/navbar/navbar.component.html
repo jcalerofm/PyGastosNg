@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar__logo">
+    <a> <i class="fa-solid fa-money-bill-trend-up"></i></a>
+  </div>
+  <ul class="navbar__menu">
+    <li><a>Dashboard</a></li>
+    <li><a href="#">Lista Gastos</a></li>
+    <li><a href="#">Añadir Gasto</a></li>
+  </ul>
+  <div class="navbar__profile">
+    <div class="dropdown">
+      <img src="https://avatars.githubusercontent.com/u/28198714?v=4" alt="Profile Image"
+        class="profile-image dropdown-toggle">
+      <div class="dropdown-menu">
+        <a class="dropdown-item" [routerLink]="['/perfil']">Perfil</a>
+        <a class="dropdown-item" href="#">Desconectar</a>
+      </div>
+    </div>
+  </div>
+</nav>

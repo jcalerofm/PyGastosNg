@@ -1,0 +1,35 @@
+<div class="container pt-5">
+  <div class="col">
+    <h1 class="text-center" style="padding-bottom: 10px;">{{title}}</h1>
+    <form class="form-group row">
+      <div class="form-group col-md-3">
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="concepto">Concepto:</label>
+        <input type="text" name="concepto" class="form-control" id="concepto" placeholder="Concepto">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="categoria">Categoría:</label>
+        <select name="categoria" class="form-control" id="categoria" placeholder="Categoría">
+          <option value="Compras">Compras</option>
+          <option value="Ocio">Ocio</option>
+          <option value="Hogar">Hogar</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="importe">Importe</label>
+        <input type="number" name="importe" class="form-control" id="importe" placeholder="Importe">
+      </div>
+      <div class="container text-center">
+        <button type="button" class="btn btn-primary"
+          style="margin-top: 35px; width: 280px;">Agregar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
