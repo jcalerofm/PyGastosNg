@@ -33,6 +33,14 @@ export class AuthService {
 
   }
 
+  getUserId() {
+    const user = this.userSubject.value;
+    if (user) {
+      return user.id;
+    }
+    return null;
+  }
+
   setCurrentUser(user: User) {
     this.currentUser = user;
   }

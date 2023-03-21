@@ -1,4 +1,5 @@
 export interface Gasto {
+  id?: number;
   date: string;
   concept: string;
   category: string;

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Gasto {
+  id: any;
   date: string;
   concept: string;
   category: string;
@@ -14,7 +15,7 @@ export interface Gasto {
   providedIn: 'root',
 })
 export class GastoService {
- 
+
   private apiUrl = 'http://localhost:5001/api/gastos';
 
 
@@ -33,7 +34,10 @@ export class GastoService {
   //   return this.http.put<Gasto>(`${this.apiUrl}/${gasto.id}`, gasto);
   // }
 
-  deleteGasto(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteGasto(userId: number, id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}/${id}`);
   }
+
+
+
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Gasto, GastoService } from '../gasto.service';
+import { tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-gastos',
@@ -10,12 +12,14 @@ import { Gasto, GastoService } from '../gasto.service';
 })
 export class GastosComponent implements OnInit {
   gastosForm: FormGroup;
+  userId: number;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private gastoService: GastoService
   ) {
+    this.userId = authService.getUserId();
     this.gastosForm = this.fb.group({
       date: ['', Validators.required],
       concept: ['', Validators.required],
@@ -23,6 +27,8 @@ export class GastosComponent implements OnInit {
       amount: ['', Validators.required]
     });
   }
+
+  originalGastos: Gasto[] = [];
 
   gastos: Gasto[] = [];
   sortColumn: keyof Gasto = 'date';
@@ -48,20 +54,51 @@ export class GastosComponent implements OnInit {
     this.updateTotalExpensesAmount();
   }
 
+
   getGastos() {
     const user = this.authService.getUser();
     if (user && user.id) {
       this.gastoService.getGastos(user.id).subscribe(gastos => {
-        this.gastos = gastos;
+        this.originalGastos = gastos;
+        this.gastos = [...gastos];
+        this.updateTotalExpensesAmount();
       }, error => {
         console.error('Error al obtener gastos:', error);
       });
     } else {
       console.error('No se pudo obtener el ID del usuario.');
     }
-    this.updateTotalExpensesAmount();
-
   }
+
+
+addGasto() {
+  const user = this.authService.getUser();
+  if (user && user.id) {
+    const newGasto: Gasto = {
+      ...this.gastosForm.value,
+      user_id: user.id
+    };
+
+    this.gastoService.createGasto(newGasto).subscribe(
+      (addedGasto) => {
+        // Actualiza las listas de gastos y gastos originales
+        this.gastos = [...this.gastos, addedGasto];
+        this.originalGastos = [...this.originalGastos, addedGasto];
+        this.gastos.push(addedGasto);
+
+        // Limpia el formulario y actualiza la cantidad total de gastos
+        this.gastosForm.reset();
+        this.updateTotalExpensesAmount();
+      },
+      (error) => {
+        console.error('Error al agregar el gasto:', error);
+      }
+    );
+  } else {
+    console.error('No se pudo obtener el ID del usuario.');
+  }
+}
+
 
   onHeaderClick(column: keyof Gasto): void {
     if (this.sortColumn === column) {
@@ -71,7 +108,7 @@ export class GastosComponent implements OnInit {
       this.sortDirection = 'asc';
     }
     this.sortExpenses();
-    this.updateTotalExpensesAmount
+    this.updateTotalExpensesAmount();
   }
 
   sortExpenses(): void {
@@ -99,11 +136,18 @@ export class GastosComponent implements OnInit {
   }
 
 
+  private filtrito = ['month', 'category' , 'filterByCategoryAndMonth']
 
-  toggleFilter(filter: string) {
+  toggleFilter(filter: string): void {
+    // Desactivar todos los filtros excepto el seleccionado
+    for (const key of this.filtrito) {
+      if (key !== filter) {
+        this.selectedFilters[key] = false;
+      }
+    }
+    // Activar o desactivar el filtro seleccionado
     this.selectedFilters[filter] = !this.selectedFilters[filter];
   }
-
 
 
   filterByCategoryAndMonthAndYear(category: string, month: number, year: number): void {
@@ -142,7 +186,7 @@ export class GastosComponent implements OnInit {
 
 
   filterByMonth(month: number, year: number): void {
-    this.gastos = this.gastos.filter(gasto => {
+    this.gastos = this.originalGastos.filter(gasto => {
       const gastoDate = new Date(gasto.date);
       return gastoDate.getMonth() + 1 === month && gastoDate.getFullYear() === year;
     });
@@ -151,13 +195,13 @@ export class GastosComponent implements OnInit {
   }
 
   filterByCategory(category: string): void {
-    this.gastos = this.gastos.filter(gasto => gasto.category === category);
+    this.gastos = this.originalGastos.filter(gasto => gasto.category === category);
     this.updateTotalExpensesAmount();
-
   }
 
+
   filterByCategoryAndMonth(category: string, month: number, year: number): void {
-    this.gastos = this.gastos.filter(gasto => {
+    this.gastos = this.originalGastos.filter(gasto => {
       const gastoDate = new Date(gasto.date);
       return (
         gasto.category === category &&
@@ -168,12 +212,6 @@ export class GastosComponent implements OnInit {
     this.updateTotalExpensesAmount();
 
   }
-
-  // updateTotalExpensesAmount(): void {
-  //   //this method should return the sum of all the expenses amounts
-  //   this.totalExpensesAmount = this.gastos.reduce((acc, gasto) => acc + gasto.amount, 0);
-  //   console.log(typeof this.totalExpensesAmount);
-  // }
 
   updateTotalExpensesAmount(): void {
     console.log(this.gastos); // Agrega esta línea para ver el contenido del array 'gastos'
@@ -187,13 +225,28 @@ export class GastosComponent implements OnInit {
 
 
 
-
-
   clearFilters() {
     for (const key in this.selectedFilters) {
       this.selectedFilters[key] = false;
     }
     this.getGastos();
   }
+
+  deleteExpense(gasto: Gasto): void {
+    this.gastoService.deleteGasto(this.userId, gasto.id).subscribe(
+      () => {
+        this.gastos = this.gastos.filter(g => g.id !== gasto.id);
+        this.originalGastos = this.originalGastos.filter(g => g.id !== gasto.id);
+        this.updateTotalExpensesAmount();
+      },
+      (error) => {
+        console.error('Error al eliminar el gasto:', error);
+      }
+    );
+  }
+
+
+
+
 
 }

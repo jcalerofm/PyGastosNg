@@ -129,3 +129,13 @@ tbody tr:nth-child(even) {
 .fas.fa-trash:hover {
   color: #b63434;
 }
+
+.ajuste-filtro {
+  width: 220px !important;
+  justify-content: center !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: initial !important;
+  flex-wrap: wrap !important;
+  align-content: stretch !important;
+}

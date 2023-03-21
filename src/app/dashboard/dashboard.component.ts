@@ -1,5 +1,5 @@
 // dashboard.component.ts
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { GastoService, Gasto } from '../gasto.service';
 import { Router } from '@angular/router';
@@ -11,7 +11,6 @@ import { GastosComponent } from '../gastos/gastos.component';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  //@ViewChild(GastosComponent) gastosComponent!: GastosComponent;
   gastos: Gasto[] = [];
   router: any;
 
@@ -36,6 +35,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit() {
+    const id = 0;
     const date = (document.getElementById('fecha') as HTMLInputElement).value;
     const concept = (document.getElementById('concepto') as HTMLInputElement).value;
     const category = (document.getElementById('categoria') as HTMLSelectElement).value;
@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
 
     //build an instance of Gasto and send it to the service
     const gasto: Gasto = {
+      id: id,
       date: date,
       concept: concept,
       category: category,

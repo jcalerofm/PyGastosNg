@@ -15,7 +15,7 @@
           <tbody>
             <tr *ngFor="let gasto of gastos">
               <td>
-                <!-- <i class="fas fa-trash" (click)="deleteExpense(expense)"></i> -->
+                <i class="fas fa-trash" (click)="deleteExpense(gasto)"></i>
               </td>
               <td>{{ gasto.date | formatDate }}</td>
               <td>{{ gasto.concept }}</td>
@@ -29,43 +29,50 @@
         <h3>TOTAL GASTOS: {{ totalExpensesAmount }} €</h3>
       </div>
     </div>
-      <div class="col-md-3">
-        <aside class="filters-container">
-          <h4 class="text-center">Filtros</h4>
-          <button class="full-width" (click)="toggleFilter('month')">Filtrar por mes</button>
-          <form *ngIf="selectedFilters['month']" (submit)="filterByMonth(filterMonth, filterYear)">
-            <label for="month">Mes:</label>
+    <div class="col-md-3">
+      <aside class="filters-container">
+        <h4 class="text-center">Filtros</h4>
+        <button class="full-width" (click)="toggleFilter('month')">Filtrar por mes</button>
+        <form *ngIf="selectedFilters['month']" (submit)="filterByMonth(filterMonth, filterYear)">
+          <div class="ajuste-filtro">
+            <label for="month" style="margin-right:-5px">Mes:</label>
             <input type="number" id="month" [(ngModel)]="filterMonth" name="month" min="1" max="12">
-            <label for="year">Año:</label>
-            <input type="number" id="year" [(ngModel)]="filterYear" name="year" min="2022">
-            <button class="filter-button" type="submit">Filtrar</button>
-          </form>
-          <button class="full-width" (click)="toggleFilter('category')">Filtrar por categoría</button>
-          <form *ngIf="selectedFilters['category']" (submit)="filterByCategory(filterCategory)">
+            <label for="year" style="margin-right:-5px">Año:</label>
+            <input type="number" id="year" style="width:62px" [(ngModel)]="filterYear" name="year" min="2022">
+          </div>
+          <button class="filter-button" type="submit">Filtrar</button>
+        </form>
+        <button class="full-width" (click)="toggleFilter('category')">Filtrar por categoría</button>
+        <form *ngIf="selectedFilters['category']" (submit)="filterByCategory(filterCategory)">
+          <div class="ajuste-filtro">
             <label for="category">Categoría:</label>
             <select id="category" [(ngModel)]="filterCategory" name="category">
               <option *ngFor="let cat of arrayCategoria" [value]="cat">{{ cat }}</option>
             </select>
-            <button class="filter-button" type="submit">Filtrar</button>
-          </form>
-          <button class="full-width" (click)="toggleFilter('filterByCategoryAndMonth')">Categoría y mes</button>
-          <form *ngIf="selectedFilters['filterByCategoryAndMonth']"
-            (submit)="filterByCategoryAndMonth(filterCategory, filterMonth, filterYear)">
+          </div>
+          <button class="filter-button" type="submit">Filtrar</button>
+        </form>
+        <button class="full-width" (click)="toggleFilter('filterByCategoryAndMonth')">Categoría y mes</button>
+        <form *ngIf="selectedFilters['filterByCategoryAndMonth']"
+          (submit)="filterByCategoryAndMonth(filterCategory, filterMonth, filterYear)">
+          <div class="ajuste-filtro">
             <label for="category">Categoría:</label>
             <select id="category" [(ngModel)]="filterCategory" name="category">
               <option *ngFor="let cat of arrayCategoria" [value]="cat">{{ cat }}</option>
             </select>
-            <label for="month">Mes:</label>
-            <input type="number" id="month" [(ngModel)]="filterMonth" name="month" min="1" max="12">
-            <label for="year">Año:</label>
-            <input type="number" id="year" [(ngModel)]="filterYear" name="year" min="2022">
+            <label for="month" style="margin-right:-5px">Mes:</label>
+            <input type="number" id="month" style="margin-right:2px;" [(ngModel)]="filterMonth" name="month" min="1" max="12">
+            <label for="year" style="margin-right:-5px">Año:</label>
+            <input type="number" id="year" style="margin-right:2px; width:62px" [(ngModel)]="filterYear" name="year"
+              min="2022">
             <button class="filter-button" type="submit">Filtrar</button>
-          </form>
-          <button class="full-width clear-filters" (click)="clearFilters()">Limpiar filtros</button>
+          </div>
+        </form>
+        <button class="full-width clear-filters" (click)="clearFilters()">Limpiar filtros</button>
 
-        </aside>
+      </aside>
 
-      </div>
     </div>
   </div>
-  <br><br>
+</div>
+<br><br>
