@@ -30,7 +30,7 @@ export class AuthService {
     };
 
     return this.http.post<any>(`${this.apiUrl2}`, user);
-    
+
   }
 
   setCurrentUser(user: User) {

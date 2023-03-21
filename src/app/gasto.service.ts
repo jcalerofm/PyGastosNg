@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Gasto {
-  id: number;
-  userId: number;
-  concepto: string;
-  importe: number;
-  fecha: string;
+  date: string;
+  concept: string;
+  category: string;
+  amount: number;
+  user_id: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class GastoService {
+ 
   private apiUrl = 'http://localhost:5001/api/gastos';
+
 
   constructor(private http: HttpClient) { }
 
@@ -23,13 +25,13 @@ export class GastoService {
   }
 
   createGasto(gasto: Gasto): Observable<Gasto> {
-    return this.http.post<Gasto>(this.apiUrl, gasto);
-    
+    console.log('Sending gasto to server:', gasto);
+    return this.http.post<Gasto>(`${this.apiUrl}/${gasto.user_id}`, gasto);
   }
 
-  updateGasto(gasto: Gasto): Observable<Gasto> {
-    return this.http.put<Gasto>(`${this.apiUrl}/${gasto.id}`, gasto);
-  }
+  // updateGasto(gasto: Gasto): Observable<Gasto> {
+  //   return this.http.put<Gasto>(`${this.apiUrl}/${gasto.id}`, gasto);
+  // }
 
   deleteGasto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

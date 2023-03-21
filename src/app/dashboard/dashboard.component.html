@@ -1,7 +1,7 @@
 <div class="container pt-5">
   <div class="col">
     <h1 class="text-center" style="padding-bottom: 10px;">{{title}}</h1>
-    <form class="form-group row">
+    <form (ngSubmit)="onSubmit()" class="form-group row">
       <div class="form-group col-md-3">
         <label for="fecha">Fecha:</label>
         <input type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha">
@@ -25,11 +25,12 @@
         <input type="number" name="importe" class="form-control" id="importe" placeholder="Importe">
       </div>
       <div class="container text-center">
-        <button type="button" class="btn btn-primary"
+        <button type="submit" class="btn btn-primary"
           style="margin-top: 35px; width: 280px;">Agregar</button>
       </div>
     </form>
   </div>
 </div>
-
+<br>  <br>
+<app-gastos></app-gastos>
 

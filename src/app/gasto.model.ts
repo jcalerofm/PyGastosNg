@@ -1,8 +1,7 @@
 export interface Gasto {
-  id: number;
-  fecha: string;
-  concepto: string;
-  categoria: string;
-  importe: number;
+  date: string;
+  concept: string;
+  category: string;
+  amount: number;
   user_id: number;
 }

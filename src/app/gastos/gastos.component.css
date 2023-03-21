@@ -1,0 +1,131 @@
+#listado {
+  overflow: hidden;
+  box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+  display: grid;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #E1F6F4;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  color: #E1F6F4;
+}
+
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  color: #07588a;
+}
+
+thead {
+  background-color: #07588a;
+  color: #E1F6F4;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #E1F6F4;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #BFE9DB;
+}
+
+.filters-container {
+  background-color: #BFE9DB;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.filters-container h4 {
+  margin-bottom: 1rem;
+}
+
+.filters-container button {
+  background-color: #6AC1B8;
+  border: none;
+  color: #E1F6F4;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.filters-container button:hover {
+  background-color: #4a9c97;
+}
+
+.filters-container form,
+.filters-container div {
+  margin-bottom: 1rem;
+}
+
+/* Estilos para los botones de filtro y el botón "Limpiar Filtros" */
+.filters-container button.full-width {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.filters-container button.clear-filters {
+  background-color: #de4343;
+  color: #E1F6F4;
+  margin-top: 1rem;
+}
+
+.filters-container button.clear-filters:hover {
+  background-color: #b63434;
+}
+
+/* Estilos específicos para los botones "Filtrar" */
+.filters-container button.filter-button {
+  background-color: #5d6868;
+  margin-top: 5px;
+}
+
+.filters-container button.filter-button:hover {
+  background-color: #5d7978;
+}
+
+/* Estilos para centrar el contenido desplegable y alinear campos de "año" con sus etiquetas */
+.filters-container form,
+.filters-container div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filters-container label {
+  margin-right: 0.5rem;
+}
+
+.filters-container input[type="number"] {
+  margin-left: 0.5rem;
+}
+
+/* Agregar al final del archivo expenses-list.component.css */
+.total-expenses {
+  margin: 1rem 0;
+  font-weight: bold;
+  color: #07588a;
+}
+
+.fas.fa-trash {
+  color: #de4343;
+  cursor: pointer;
+}
+
+.fas.fa-trash:hover {
+  color: #b63434;
+}
