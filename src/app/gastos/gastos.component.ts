@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Gasto, GastoService } from '../gasto.service';
 import { tap } from 'rxjs/operators';
+import { SharedService } from '../shared.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class GastosComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private gastoService: GastoService
+    private gastoService: GastoService,
+    private sharedService: SharedService
   ) {
     this.userId = authService.getUserId();
     this.gastosForm = this.fb.group({
@@ -26,7 +28,12 @@ export class GastosComponent implements OnInit {
       category: ['', Validators.required],
       amount: ['', Validators.required]
     });
+    this.sharedService.onGastoAdded.subscribe((nuevoGasto) => {
+      this.gastos.push(nuevoGasto);
+    });
   }
+
+
 
   originalGastos: Gasto[] = [];
 
@@ -71,33 +78,29 @@ export class GastosComponent implements OnInit {
   }
 
 
-addGasto() {
-  const user = this.authService.getUser();
-  if (user && user.id) {
-    const newGasto: Gasto = {
-      ...this.gastosForm.value,
-      user_id: user.id
-    };
+  addGasto() {
+    const user = this.authService.getUser();
+    if (user && user.id) {
+      const newGasto: Gasto = {
+        ...this.gastosForm.value,
+        user_id: user.id
+      };
 
-    this.gastoService.createGasto(newGasto).subscribe(
-      (addedGasto) => {
-        // Actualiza las listas de gastos y gastos originales
-        this.gastos = [...this.gastos, addedGasto];
-        this.originalGastos = [...this.originalGastos, addedGasto];
-        this.gastos.push(addedGasto);
-
-        // Limpia el formulario y actualiza la cantidad total de gastos
-        this.gastosForm.reset();
-        this.updateTotalExpensesAmount();
-      },
-      (error) => {
-        console.error('Error al agregar el gasto:', error);
-      }
-    );
-  } else {
-    console.error('No se pudo obtener el ID del usuario.');
+      this.gastoService.createGasto(newGasto).subscribe(
+        (addedGasto) => {
+          this.gastos = [...this.gastos, addedGasto];
+          this.originalGastos = [...this.originalGastos, addedGasto];
+          this.gastosForm.reset();
+          this.updateTotalExpensesAmount();
+        },
+        (error) => {
+          console.error('Error al agregar el gasto:', error);
+        }
+      );
+    } else {
+      console.error('No se pudo obtener el ID del usuario.');
+    }
   }
-}
 
 
   onHeaderClick(column: keyof Gasto): void {

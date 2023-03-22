@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { GastoService, Gasto } from '../gasto.service';
 import { Router } from '@angular/router';
 import { GastosComponent } from '../gastos/gastos.component';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,9 +17,11 @@ export class DashboardComponent implements OnInit {
 
   title = 'Mis Gastos';
 
+
   constructor(
     private authService: AuthService,
-    private gastoService: GastoService
+    private gastoService: GastoService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +61,7 @@ export class DashboardComponent implements OnInit {
         // push the new gasto to the array
         this.gastos.push(gasto);
 
-        this.ngOnInit();
+        this.sharedService.onGastoAdded.emit(gasto);
       },
       (error) => {
         // Manejar errores aquí
