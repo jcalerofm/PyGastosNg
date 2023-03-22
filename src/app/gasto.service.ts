@@ -30,9 +30,12 @@ export class GastoService {
     return this.http.post<Gasto>(`${this.apiUrl}/${gasto.user_id}`, gasto);
   }
 
-  // updateGasto(gasto: Gasto): Observable<Gasto> {
-  //   return this.http.put<Gasto>(`${this.apiUrl}/${gasto.id}`, gasto);
-  // }
+
+  updateGasto(userId: number, gasto: Gasto): Observable<Gasto> {
+    return this.http.put<Gasto>(`http://localhost:5001/api/gastos/${userId}/${gasto.id}`, gasto);
+  }
+
+
 
   deleteGasto(userId: number, id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/${id}`);

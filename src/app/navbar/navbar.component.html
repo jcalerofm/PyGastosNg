@@ -1,19 +1,22 @@
 <nav class="navbar">
   <div class="navbar__logo">
-    <a> <i class="fa-solid fa-money-bill-trend-up"></i></a>
+    <a [routerLink]="isLoggedIn() ? '/dashboard' : '/'">
+      <img src="https://media.discordapp.net/attachments/1051210528464306196/1088017708710379561/logoPayTrack.png?width=1266&height=1266" alt="logoPayTrack" class="logoshico">
+    </a>
   </div>
   <ul class="navbar__menu">
-    <li><a>Dashboard</a></li>
-    <li><a href="#">Lista Gastos</a></li>
-    <li><a href="#">Añadir Gasto</a></li>
+    <li><a routerLink="/dashboard">Dashboard</a></li>
+    <li><a routerLink="/sabermas">Saber más</a></li>
+    <li><a routerLink="/contacto">Contacto</a></li>
   </ul>
+
   <div class="navbar__profile">
     <div class="dropdown">
       <img src="https://avatars.githubusercontent.com/u/28198714?v=4" alt="Profile Image"
         class="profile-image dropdown-toggle">
       <div class="dropdown-menu">
         <a class="dropdown-item" [routerLink]="['/perfil']">Perfil</a>
-        <a class="dropdown-item" href="#">Desconectar</a>
+        <a class="dropdown-item" routerLink="/" (click)="logout()">Desconectar</a>
       </div>
     </div>
   </div>

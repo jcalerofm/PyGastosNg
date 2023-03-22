@@ -4,6 +4,9 @@ import { AuthService } from '../auth.service';
 import { Gasto, GastoService } from '../gasto.service';
 import { tap } from 'rxjs/operators';
 import { SharedService } from '../shared.service';
+import { ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 @Component({
@@ -12,14 +15,13 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./gastos.component.css']
 })
 export class GastosComponent implements OnInit {
-  gastosForm: FormGroup;
-  userId: number;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private gastoService: GastoService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private cd: ChangeDetectorRef
   ) {
     this.userId = authService.getUserId();
     this.gastosForm = this.fb.group({
@@ -33,10 +35,17 @@ export class GastosComponent implements OnInit {
     });
   }
 
+  @ViewChild('editDate') editDate!: ElementRef;
+  @ViewChild('editConcept') editConcept!: ElementRef;
+  @ViewChild('editCategory') editCategory!: ElementRef;
+  @ViewChild('editAmount') editAmount!: ElementRef;
 
-
+  gastosForm: FormGroup;
+  userId: number;
+  editIndex: number = -1;
+  editedGasto: any = {};
   originalGastos: Gasto[] = [];
-
+  editingGastoId: number | null = null;
   gastos: Gasto[] = [];
   sortColumn: keyof Gasto = 'date';
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -52,10 +61,6 @@ export class GastosComponent implements OnInit {
   };
 
 
-
-
-
-
   ngOnInit(): void {
     this.getGastos();
     this.updateTotalExpensesAmount();
@@ -68,6 +73,7 @@ export class GastosComponent implements OnInit {
       this.gastoService.getGastos(user.id).subscribe(gastos => {
         this.originalGastos = gastos;
         this.gastos = [...gastos];
+        this.gastosForm.reset();
         this.updateTotalExpensesAmount();
       }, error => {
         console.error('Error al obtener gastos:', error);
@@ -100,6 +106,58 @@ export class GastosComponent implements OnInit {
     } else {
       console.error('No se pudo obtener el ID del usuario.');
     }
+  }
+
+  startEditingGasto(gasto: Gasto): void {
+    this.editingGastoId = gasto.id;
+  }
+
+  cancelEditingGasto(): void {
+    this.editingGastoId = null;
+  }
+
+  updateEditedGasto(key: string, value: any): void {
+    this.editedGasto[key] = value;
+  }
+
+  //toma los datos del formulario, actualiza el gasto y lo guarda en la base de datos y en el array de gastos
+  saveEdited(userId: number, gasto: Gasto): void {
+    const editedGasto = {
+      ...gasto,
+      ...this.editedGasto
+    };
+    this.gastoService.updateGasto(userId, editedGasto).subscribe(
+      (updatedGasto) => {
+        const index = this.gastos.findIndex((gasto) => gasto.id === updatedGasto.id);
+        this.gastos[index] = updatedGasto;
+        this.originalGastos[index] = updatedGasto;
+        this.editingGastoId = null;
+        this.editedGasto = {};
+        this.cd.markForCheck();
+        this.updateTotalExpensesAmount();
+      },
+      (error) => {
+        console.error('Error al actualizar el gasto:', error);
+      }
+    );
+
+    this.cancelEdit();
+    window.location.reload();
+  }
+
+
+
+
+
+
+  enableEdit(index: number, gasto: any) {
+    this.editIndex = index;
+    this.editedGasto = JSON.parse(JSON.stringify(gasto));
+  }
+
+  cancelEdit(): void {
+    this.editIndex = -1;
+    this.editedGasto = {};
   }
 
 
@@ -217,10 +275,10 @@ export class GastosComponent implements OnInit {
   }
 
   updateTotalExpensesAmount(): void {
-    console.log(this.gastos); // Agrega esta línea para ver el contenido del array 'gastos'
+    console.log(this.gastos);
 
     this.totalExpensesAmount = this.gastos.reduce((acc, gasto) => {
-      console.log(gasto.amount); // Agrega esta línea para ver los valores que se están sumando
+      console.log(gasto.amount);
       return acc + (+gasto.amount);
     }, 0);
     console.log(typeof this.totalExpensesAmount);
@@ -234,6 +292,9 @@ export class GastosComponent implements OnInit {
     }
     this.getGastos();
   }
+
+
+
 
   deleteExpense(gasto: Gasto): void {
     this.gastoService.deleteGasto(this.userId, gasto.id).subscribe(

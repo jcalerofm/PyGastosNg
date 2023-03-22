@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GastosComponent } from './gastos/gastos.component';
 import { FormatDatePipe } from './format-date.pipe';
+import { SaberMasComponent } from './saber-mas/saber-mas.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { FormatDatePipe } from './format-date.pipe';
     RegisterComponent,
     GastosComponent,
     FormatDatePipe,
+    SaberMasComponent,
+    ContactoComponent,
   ],
   imports: [
     BrowserModule,

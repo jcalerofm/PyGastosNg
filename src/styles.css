@@ -10,8 +10,12 @@
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #E1F6F4;
+  background-color: rgb(225, 246, 244);
   height: 100%;
+  background-image: linear-gradient(to bottom, rgba(225, 246, 244, 0.7), rgba(225, 246, 244, 0.7)), url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 html,

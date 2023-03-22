@@ -84,3 +84,15 @@
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+.logoshico {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  z-index: 1;
+  position: absolute;
+  top: -39%;
+}

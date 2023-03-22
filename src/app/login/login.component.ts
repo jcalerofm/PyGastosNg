@@ -30,4 +30,8 @@ export class LoginComponent {
     });
   }
 
+  isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+
 }

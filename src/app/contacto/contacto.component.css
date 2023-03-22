@@ -1,0 +1,78 @@
+.contacto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px;
+  color: white;
+}
+
+.contacto-card {
+  width: 640px;
+  padding: 30px;
+  background-color: #08588aed;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  line-height: 1.6;
+  color: white;
+}
+
+.contacto-card h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #4a4a4a;
+}
+
+.contacto-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contacto-card div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.contacto-card label {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.contacto-card input,
+.contacto-card textarea {
+  font-size: 1rem;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.contacto-card button {
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  background-color: #4a4a4a;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.contacto-card button:hover {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .contacto {
+    padding: 30px 20px;
+  }
+
+  .contacto-card {
+    padding: 20px;
+  }
+
+  .contacto-card h1 {
+    font-size: 2rem;
+  }
+}

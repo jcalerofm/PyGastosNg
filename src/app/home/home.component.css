@@ -19,8 +19,7 @@
   flex-grow: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #E1F6F4;
+  justify-content: center; 
 }
 
 .hero {
@@ -62,7 +61,7 @@
 }
 
 .hero__image {
-  max-width: 100%;
+  max-width: 65%;
   margin-bottom: 1rem;
   margin-top: -200px;
   margin-bottom: -100px;
