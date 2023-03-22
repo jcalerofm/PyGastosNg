@@ -210,8 +210,8 @@ def send_email():
     mensaje = data['mensaje']
 
     # Configurar los datos del correo electrónico
-    mi_email = "jorge.calero@gmail.com"
-    mi_password = "cquimnyzxidyixrf"
+    mi_email = "YOUR_EMAIL@EMAIL.COM"
+    mi_password = "YOUR_PASSWORD"
 
     msg = MIMEMultipart()
     msg['From'] = mi_email
