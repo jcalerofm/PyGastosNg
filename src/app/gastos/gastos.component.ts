@@ -197,7 +197,7 @@ export class GastosComponent implements OnInit {
   }
 
 
-  private filtrito = ['month', 'category' , 'filterByCategoryAndMonth']
+  private filtrito = ['month', 'category', 'filterByCategoryAndMonth']
 
   toggleFilter(filter: string): void {
     // Desactivar todos los filtros excepto el seleccionado
