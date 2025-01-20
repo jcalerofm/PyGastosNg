@@ -234,6 +234,6 @@ def send_email():
         return jsonify({"status": "error", "message": "Error al enviar el correo electrónico"}), 500
 
 if __name__ == '__main__':
-  app.run(debug=True, port=5001)
-
-
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, port=5001)
